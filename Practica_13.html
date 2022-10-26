@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <script>
+        //EJERCICIO 1 EJEMPLO
+
+        const foo = () => {
+        //console.log("foobar");
+        };
+        //foo(); // Invoke it using the variable
+        // foobar
+
+        function sayHello() {
+        return "Hello, ";
+        }
+        function greeting(helloMessage, name) {
+        //console.log(helloMessage() + name);
+        }
+        // Pass `sayHello` as an argument to `greeting` function
+        //greeting(sayHello, "JavaScript!");// Hello, JavaScript!
+        
+
+        //EJERCICIO 2 EJEMPLO
+        
+        //currying
+        function add (a){
+            return function (b){
+                return a + b;
+            }
+        }
+        //add(2)(3)
+
+        //partial appli.
+        function add(x,y,z){
+            return x + y + z;
+        }
+        //add(1,2,3); //6
+
+        function partial(fn, ...args){
+            return function (...moreArgs){
+                return fn(...args, ...moreArgs);
+            };
+        }
+        const plus3 = add.bind(null,1,2);
+        //console.log(plus3(5)); //8 
+        
+        //EJERCICIO 3
+        var cilindro = function (radio,altura){
+            re = Math.PI*radio*radio*altura;
+            return re
+        }
+        //console.log(cilindro(2,4));
+
+        var vol = function (radio){
+            return function (altura){
+                return Math.PI*radio*radio*altura;
+            }
+        }
+        const vol2 = vol(2);
+        //console.log(vol2(4));
+
+
+
+        //EJERCICIO 4
+        function joinWords(arg){//
+            return function(arg2){
+                return function(arg3){
+                    return function(arg4){
+                        return function(arg5){
+                            return arg+arg2+arg3+arg4;
+                        }
+                    }
+                }
+            }
+        }
+        result = joinWords ('Hello') () ;
+        console.log ( result ); // Hello
+        result = joinWords ('There ')('is ')('no ')('spoon.') () ;
+        console.log ( result ); // There is no spoon .
+
+        //EJERCICIO 5
+
+        var total = 0;
+        var delayInvoc = function (a) {
+            return function (b){
+                val = a+b;
+                //console.log(a,b);
+                total = total + val;
+                //console.log(total);
+                return function (c){
+                    val = c;
+                    //console.log(a,b,c);
+                    //console.log(val);//17
+                    //console.log(total);//18
+                    total = total + val;
+                    
+                }
+            }
+        }
+        delayInvoc (4) (5)
+        //console.log( total ); //9
+        delayInvoc (4) (5) (8)
+        //console.log( 'totalfinal; ',total ); // 26
+
+        //EJERCICIO 6
+
+        function abc(a, b, c){
+            return a+b+c;
+        }
+        function curry (f) {
+            return function curried(...args) {
+                if(args.length >= f.length) {
+                    return f.apply(this, args);
+                } else {
+                    return function(...args2) {
+                        return curried.apply(this, args.concat(args2));
+                    }
+                }
+            };
+        }
+        var curriedAbc = curry ( abc );
+        //console.log ( curriedAbc (2) (3) (4) ); // 9
+        //console.log ( curriedAbc (2 ,3) (4) ); // 9
+        //console.log ( curriedAbc (2) (3 ,4) ); // 9
+        //console.log ( curriedAbc (2 ,3 ,4) ) ; // 9
+    </script>
+</body>
+</html>
